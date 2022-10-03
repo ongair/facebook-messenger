@@ -13,6 +13,7 @@ require 'facebook/messenger/incoming/policy_enforcement'
 require 'facebook/messenger/incoming/pass_thread_control'
 require 'facebook/messenger/incoming/game_play'
 require 'facebook/messenger/incoming/message_reaction'
+require 'facebook/messenger/incoming/feed'
 
 module Facebook
   module Messenger
@@ -29,6 +30,7 @@ module Facebook
         'postback' => Postback,
         'optin' => Optin,
         'read' => Read,
+        'value' => Feed,
         'account_linking' => AccountLinking,
         'referral' => Referral,
         'message_echo' => MessageEcho,

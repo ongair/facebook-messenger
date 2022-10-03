@@ -79,6 +79,10 @@ describe Facebook::Messenger::Server do
     end
 
     it 'triggers the feed event' do
+
+      expect(Facebook::Messenger::Bot).to receive(:trigger)
+        .with(:value, any_args)
+
       post '/', payload
     end
   end
