@@ -48,6 +48,41 @@ describe Facebook::Messenger::Server do
     end
   end
 
+  describe 'POST Feed' do
+    let :payload do
+      JSON.generate(
+        object: 'page',
+        entry: [
+          {
+            id: '2',
+            time: 145_776_419_824_6,
+            changes: [{
+              value: {
+                from: {
+                  id: '1',
+                  name: 'Page'
+                },
+                post: {
+                  status_type: 'mobile_status_update',
+                  permalink_url: 'https://www.facebook.com',
+                  id: 'post-id-1'
+                },
+                message: 'Hello, bot!',
+                post_id: 'post-id-1',
+                comment_id: 'comment-id-1',
+                item: 'comment'
+              }
+            }]
+          }
+        ]
+      )
+    end
+
+    it 'triggers the feed event' do
+      post '/', payload
+    end
+  end
+
   describe 'POST' do
     let :payload do
       JSON.generate(
