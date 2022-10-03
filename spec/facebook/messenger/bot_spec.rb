@@ -166,6 +166,14 @@ describe Facebook::Messenger::Bot do
       end
     end
 
+    context 'with a new event' do
+      before { subject.on :value, &hook }
+
+      it 'runs the hook' do
+        expect(subject.trigger(:value, 'foo')).to eq('foo')
+      end
+    end
+
     context 'with an invalid event' do
       it 'ignores hookless trigger' do
         expect { subject.trigger(:foo, 'bar') }

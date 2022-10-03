@@ -26,7 +26,7 @@ module Facebook
         account_linking
         referral
         message_echo
-        change
+        value
         payment
         policy_enforcement
         pass_thread_control
