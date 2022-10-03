@@ -177,6 +177,7 @@ module Facebook
 
           if has_changes
             entry['changes'.freeze].each do |changes|
+              changes['value']['page_id'] = entry['id']
               Facebook::Messenger::Bot.receive(changes)
             end
           end

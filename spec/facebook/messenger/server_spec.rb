@@ -54,7 +54,7 @@ describe Facebook::Messenger::Server do
         object: 'page',
         entry: [
           {
-            id: '2',
+            id: 'page-id-2',
             time: 145_776_419_824_6,
             changes: [{
               value: {
