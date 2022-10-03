@@ -91,6 +91,7 @@ module Facebook
         #
         def receive(payload)
           callback = Facebook::Messenger::Incoming.parse(payload)
+          puts ">>> Bot Payload: #{payload} - #{callback.class}"
           event = Facebook::Messenger::Incoming::EVENTS.invert[callback.class]
           trigger(event.to_sym, callback)
         end
