@@ -70,7 +70,8 @@ describe Facebook::Messenger::Server do
                 message: 'Hello, bot!',
                 post_id: 'post-id-1',
                 comment_id: 'comment-id-1',
-                item: 'comment'
+                item: 'comment',
+                verb: 'add'
               }
             }]
           }
@@ -78,12 +79,41 @@ describe Facebook::Messenger::Server do
       )
     end
 
-    it 'triggers the feed event' do
+    let :like_payload do
+      JSON.generate(
+        object: 'page',
+        entry: [
+          {
+            id: 'page-id-2',
+            changes: [{
+              value: {
+                from: {
+                  id: '1',
+                  name: 'Page'
+                },
+                item: 'reaction',
+                verb: 'add'
+              }
+            }]
+          }
+        ]
+      )
+    end
+
+    it 'triggers the comment feed event' do
 
       expect(Facebook::Messenger::Bot).to receive(:trigger)
         .with(:value, any_args)
 
       post '/', payload
+    end
+
+    it 'does not trigger the feed event for a like' do
+
+      expect(Facebook::Messenger::Bot).to_not receive(:trigger)
+        .with(:value, any_args)
+
+      post '/', like_payload
     end
   end
 

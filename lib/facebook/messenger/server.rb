@@ -178,7 +178,10 @@ module Facebook
           if has_changes
             entry['changes'.freeze].each do |changes|
               changes['value']['page_id'] = entry['id']
-              Facebook::Messenger::Bot.receive(changes)
+
+              value = changes['value']
+              is_comment = value['item'] == 'comment' && value['verb'] === 'add'
+              Facebook::Messenger::Bot.receive(changes) if is_comment
             end
           end
         end
