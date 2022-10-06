@@ -181,7 +181,8 @@ module Facebook
 
               value = changes['value']
               is_comment = value['item'] == 'comment' && value['verb'] === 'add'
-              Facebook::Messenger::Bot.receive(changes) if is_comment
+              is_echo = entry['id'] == value['from']['id']
+              Facebook::Messenger::Bot.receive(changes) if is_comment && !is_echo
             end
           end
         end

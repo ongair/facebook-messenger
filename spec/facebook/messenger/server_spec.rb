@@ -100,6 +100,27 @@ describe Facebook::Messenger::Server do
       )
     end
 
+    let :echo_payload do
+      JSON.generate(
+        object: 'page',
+        entry: [
+          {
+            id: 'page-id-2',
+            changes: [{
+              value: {
+                from: {
+                  id: 'page-id-2',
+                  name: 'Page'
+                },
+                item: 'comment',
+                verb: 'add'
+              }
+            }]
+          }
+        ]
+      )
+    end
+
     it 'triggers the comment feed event' do
 
       expect(Facebook::Messenger::Bot).to receive(:trigger)
@@ -114,6 +135,13 @@ describe Facebook::Messenger::Server do
         .with(:value, any_args)
 
       post '/', like_payload
+    end
+
+    it 'does not trigger the feed event for an echo' do
+
+      expect(Facebook::Messenger::Bot).to_not receive(:trigger)
+        .with(:value, any_args)
+      post '/', echo_payload
     end
   end
 
